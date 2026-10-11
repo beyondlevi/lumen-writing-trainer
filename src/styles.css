@@ -1,0 +1,488 @@
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: var(--uit-color-background-window);
+}
+
+body {
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+p,
+ol,
+ul,
+h2 {
+  margin: 0;
+  padding: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+/* A page's content above a dock of hints or actions. */
+.page-shell,
+.home-shell {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  block-size: 100%;
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+
+.home-shell {
+  position: relative;
+}
+
+.home-summary {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 1;
+  background: var(--uit-color-background-window);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--uit-spacing-small);
+  padding-block: calc(var(--uit-header-area-length) + var(--uit-spacing-med-lg)) var(--uit-spacing-large);
+  padding-inline: var(--uit-spacing-large);
+  min-inline-size: 0;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--uit-spacing-xsmall);
+  min-inline-size: 0;
+}
+
+.home-xp {
+  inline-size: 60%;
+}
+
+.hint-dock {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--uit-spacing-xsmall);
+  padding-block: var(--uit-spacing-xsmall);
+  padding-inline: var(--uit-spacing-large);
+  min-inline-size: 0;
+}
+
+.action-dock {
+  min-inline-size: 0;
+  padding-block-end: var(--uit-spacing-xsmall);
+}
+
+.content-inset {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--uit-spacing-large) + var(--uit-spacing-xsmall));
+  min-inline-size: 0;
+  padding: var(--uit-spacing-large);
+}
+
+/* Trail: levels zigzag down, each node beside its name. */
+.trail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--uit-spacing-small);
+  padding-block: var(--uit-spacing-small);
+  min-inline-size: 0;
+}
+
+.trail-inset {
+  padding-inline: var(--uit-spacing-large);
+  min-inline-size: 0;
+}
+
+.trail-step {
+  display: grid;
+  grid-template-columns: 45% minmax(0, 1fr);
+  align-items: center;
+  min-inline-size: 0;
+}
+
+.trail-step-node {
+  display: flex;
+  justify-content: flex-end;
+  padding-inline-end: 10%;
+}
+
+.trail-step--shifted .trail-step-node {
+  padding-inline-end: 0;
+}
+
+.trail-step-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--uit-spacing-2xs);
+  padding-inline-end: var(--uit-spacing-large);
+  min-inline-size: 0;
+}
+
+.stars {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--uit-spacing-2xs);
+  color: var(--uit-color-icon-primary);
+}
+
+.star {
+  inline-size: var(--uit-icon-small);
+  block-size: var(--uit-icon-small);
+}
+
+.stars--large {
+  gap: var(--uit-spacing-small);
+}
+
+.stars--large .star {
+  inline-size: var(--uit-icon-2xl);
+  block-size: var(--uit-icon-2xl);
+}
+
+/* Round */
+.round-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--uit-spacing-medium);
+  padding-block-start: calc(var(--uit-header-area-length) + var(--uit-spacing-large));
+  padding-inline: var(--uit-spacing-large);
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+
+.round-segments {
+  display: flex;
+  gap: var(--uit-spacing-2xs);
+  inline-size: 84%;
+}
+
+.segment {
+  flex: 1 1 0;
+  block-size: var(--uit-spacing-xsmall);
+  background: var(--uit-color-background-track);
+}
+
+.segment--done {
+  background: var(--uit-color-accent-blue);
+}
+
+.segment--current {
+  background: var(--uit-color-text-primary);
+}
+
+.round-prompt {
+  text-align: center;
+}
+
+.tiles {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: var(--uit-spacing-small);
+  inline-size: 100%;
+  padding-block: var(--uit-spacing-small);
+  min-inline-size: 0;
+}
+
+.tile {
+  position: relative;
+  flex: 0 1 calc(var(--uit-spacing-5xl) * 2);
+  aspect-ratio: 6 / 7;
+  min-inline-size: 0;
+}
+
+.tile-face {
+  position: absolute;
+  inset: 0;
+}
+
+.tile-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: 100%;
+}
+
+.tile-face--outlined {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--uit-spacing-2xs) solid var(--uit-color-persistent-negative);
+  border-radius: var(--uit-corner-radius-small);
+}
+
+.tile-letter--wrong {
+  color: var(--uit-color-persistent-negative);
+}
+
+.tile-letter--pending {
+  opacity: var(--uit-disabled-opacity);
+}
+
+.tile-badge {
+  position: absolute;
+  z-index: 1;
+  inset-block-start: var(--uit-spacing-xsmall);
+  inset-inline-end: var(--uit-spacing-xsmall);
+  inline-size: var(--uit-icon-small);
+  block-size: var(--uit-icon-small);
+  color: var(--uit-color-icon-primary);
+}
+
+.tile-badge--wrong {
+  color: var(--uit-color-persistent-negative);
+}
+
+.tile-caret {
+  position: absolute;
+  z-index: 1;
+  inset-block-end: var(--uit-spacing-medium);
+  inset-inline: 30%;
+  block-size: var(--uit-spacing-2xs);
+  border-radius: var(--uit-corner-radius-full);
+  background: var(--uit-color-text-primary);
+}
+
+.tile-was {
+  position: absolute;
+  inset-block-start: calc(100% + var(--uit-spacing-xsmall));
+  inset-inline: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* The field the band writes into lies over the letters (or the phrase): the letters show what it holds. */
+.round-field {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  inline-size: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: transparent;
+  caret-color: transparent;
+}
+
+.round-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-block-start: var(--uit-spacing-large);
+  text-align: center;
+  min-inline-size: 0;
+}
+
+.word-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--uit-spacing-2xs);
+}
+
+.round-content--phrase {
+  align-items: stretch;
+}
+
+.round-content--phrase .round-segments {
+  align-self: center;
+}
+
+.phrase-box {
+  position: relative;
+  padding-block: var(--uit-spacing-xlarge) var(--uit-spacing-medium);
+  min-inline-size: 0;
+}
+
+.phrase {
+  overflow-wrap: anywhere;
+}
+
+.phrase-char--typed {
+  color: var(--uit-color-text-primary);
+}
+
+.phrase-char--wrong {
+  color: var(--uit-color-persistent-negative);
+}
+
+.phrase-char--pending {
+  color: var(--uit-color-text-placeholder);
+}
+
+.phrase-char--caret {
+  box-shadow: inset var(--uit-spacing-2xs) 0 0 var(--uit-color-text-primary);
+}
+
+.phrase-char--end {
+  display: inline-block;
+  inline-size: var(--uit-spacing-2xs);
+}
+
+.phrase-word--missed {
+  text-decoration-line: underline;
+  text-decoration-color: var(--uit-color-persistent-negative);
+  text-decoration-thickness: var(--uit-spacing-2xs);
+  text-underline-offset: var(--uit-spacing-xsmall);
+}
+
+.round-message--phrase {
+  align-items: stretch;
+  min-block-size: calc(var(--uit-spacing-5xl) + var(--uit-spacing-large));
+  padding-block-start: 0;
+  text-align: start;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--uit-spacing-small);
+  min-inline-size: 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--uit-spacing-large);
+  white-space: nowrap;
+}
+
+/* Result */
+.result-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--uit-spacing-medium);
+  padding-block-start: calc(var(--uit-header-area-length) + var(--uit-spacing-medium));
+  padding-inline: var(--uit-spacing-xlarge);
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+
+.result-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--uit-spacing-small);
+  inline-size: 100%;
+}
+
+.result-xp,
+.result-train {
+  display: flex;
+  align-items: center;
+  gap: var(--uit-spacing-small);
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.result-xp-bar {
+  flex: 1 1 0;
+  min-inline-size: 0;
+}
+
+/* Progress */
+.progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--uit-spacing-small);
+  min-inline-size: 0;
+}
+
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--uit-spacing-small);
+}
+
+.week-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--uit-spacing-2xs);
+  min-inline-size: 0;
+}
+
+.week-track {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: calc(var(--uit-spacing-5xl) * 2.5);
+}
+
+.week-bar {
+  inline-size: 70%;
+  background: var(--uit-color-background-track);
+}
+
+.week-bar--today {
+  background: var(--uit-color-accent-blue);
+}
+
+.letter-grid {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: var(--uit-spacing-xsmall);
+}
+
+.letter-cell {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--uit-spacing-2xs);
+  padding-block: var(--uit-spacing-xsmall);
+  background: var(--uit-color-background-surface);
+  min-inline-size: 0;
+}
+
+.letter-cell--weak {
+  border-radius: var(--uit-corner-radius-xsmall);
+  background: none;
+  box-shadow: inset 0 0 0 var(--uit-spacing-2xs) var(--uit-color-persistent-negative);
+}
+
+.letter-cell--none {
+  background: var(--uit-color-background-window);
+}
+
+/* Pages kept mounted above the routes (see KeptPage); hidden, under them. */
+.kept-page {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  contain: strict;
+  background: var(--uit-color-background-window);
+}
+
+.kept-page--hidden {
+  z-index: -1;
+}
+
+/* The routes are drawn opaque, so a kept page under them never shows through a page transition. */
+.route-viewport {
+  background: var(--uit-color-background-window);
+}

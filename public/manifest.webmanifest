@@ -1,0 +1,20 @@
+{
+  "id": "dev.lumen.writing-trainer",
+  "name": "Writing Trainer",
+  "short_name": "Writing Trainer",
+  "version": "0.1.0",
+  "description": "Learn to write with the Meta Neural Band: words letter by letter, then phrases, as a game.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any monochrome"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any monochrome"}
+  ],
+  "lumen_config": [
+    {"key": "content.language", "label": "Content language (Auto, English, Português)", "type": "text", "optional": true}
+  ]
+}

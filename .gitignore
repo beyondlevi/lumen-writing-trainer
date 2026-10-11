@@ -3,3 +3,6 @@ dist/
 *.mrbd.zip
 .e2e-output/
 *.log
+.wearables-test/
+.perf-output/
+.captures/
