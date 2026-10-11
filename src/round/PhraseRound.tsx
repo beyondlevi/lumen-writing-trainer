@@ -17,7 +17,7 @@ export function PhraseRound({items, game, lang}: {items: Item[]; game: Round; la
   const typed = tracker.segments[index]?.typed ?? '';
   const now = performance.now();
   const missedWords = phraseWords(item.text).filter(word => wordMissed(tracker, index, word));
-  const accented = item.text.split(' ').find(word => hasAccent(word)) ?? null;
+  const accented = hasAccent(item.text);
   const wrongNow = lettersOf(typed, item).some(letter => letter.state === 'wrong');
 
   let note: string | null = null;
@@ -29,7 +29,7 @@ export function PhraseRound({items, game, lang}: {items: Item[]; game: Round; la
     note = t('instructionsPhrase');
   } else {
     const notes = [
-      accented != null ? t('accentsNote', {accented, plain: fold(accented, true)}) : null,
+      accented ? t('accentsNote') : null,
       missedWords.length > 0 ? t('markedNote') : null,
     ].filter(text => text != null);
     note = notes.length > 0 ? notes.join(' ') : null;

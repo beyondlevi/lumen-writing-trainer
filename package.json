@@ -2,7 +2,7 @@
   "name": "lumen-writing-trainer",
   "private": true,
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Writing Trainer for Lumen: learn to write with the Meta Neural Band, as a game.",
   "scripts": {

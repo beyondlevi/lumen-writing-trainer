@@ -2,7 +2,7 @@
   "id": "dev.lumen.writing-trainer",
   "name": "Writing Trainer",
   "short_name": "Writing Trainer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Learn to write with the Meta Neural Band: words letter by letter, then phrases, as a game.",
   "lang": "en",
   "start_url": "./",

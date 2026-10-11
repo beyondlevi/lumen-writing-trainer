@@ -41,6 +41,18 @@ const oneDecimal = new Intl.NumberFormat('en-US', {minimumFractionDigits: 1, max
 /** A speed as the English interface shows it. */
 const wpmText = value => `${oneDecimal.format(value)} wpm`;
 
+/** Math.random seeded from the page's `?seed=` (the rounds' draws repeat). */
+const SEEDED_RANDOM = `(() => {
+  let state = Number(new URL(location.href).searchParams.get('seed') ?? 1) >>> 0;
+  Math.random = () => {
+    state = (state + 0x6d2b79f5) >>> 0;
+    let t = state;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+})();`;
+
 /** What the band writes for a text: no accents. */
 const bandText = text => text.normalize('NFD').replace(/\p{M}/gu, '');
 
@@ -446,6 +458,27 @@ async function languages(browser) {
   } finally {
     await portuguese.context.close();
   }
+  // A phrase with an accent: the app, not Lumen, forgives it (train turns Lumen's corrections off).
+  const accents = await newPage(browser, {locale: 'pt-BR', scripts: [SEEDED_RANDOM]});
+  try {
+    const {page} = accents;
+    let phrase = null;
+    for (let seed = 1; seed < 40 && phrase == null; seed += 1) {
+      await page.goto(`${APP}/play/phrases/0?seed=${seed}`);
+      await page.waitForTimeout(500);
+      const first = await targetPhrase(page);
+      if (bandText(first) !== first) phrase = first;
+    }
+    assert.ok(phrase != null, 'an accented phrase');
+    await write(page, bandText(phrase).slice(0, 1));
+    await waitForText(page, 'Escreva sem acentos: a band não tem letras acentuadas, e o app confere sem eles.');
+    assert.equal(await shows(page, 'o Lumen põe'), false);
+    await write(page, bandText(phrase).slice(1));
+    assert.equal(await page.locator('.phrase-char--wrong').count(), 0, 'written without accents, every letter is right');
+    assert.deepEqual(accents.problems, []);
+  } finally {
+    await accents.context.close();
+  }
   const english = await newPage(browser, {locale: 'pt-BR', scripts: [fakeConfig({'content.language': 'English'}), FAKE_WRITING]});
   try {
     const {page} = english;
@@ -474,7 +507,7 @@ async function offlinePackage(browser) {
   const manifest = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.webmanifest'), 'utf8'));
   assert.equal(manifest.id, 'dev.lumen.writing-trainer');
   assert.equal(manifest.name, 'Writing Trainer');
-  assert.equal(manifest.version, '0.1.0');
+  assert.equal(manifest.version, JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')).version);
   assert.equal('lumen_internet' in manifest, false);
   assert.deepEqual(manifest.lumen_config.map(field => field.key), ['content.language']);
   const server = await startStaticServer(dir, 5500);
